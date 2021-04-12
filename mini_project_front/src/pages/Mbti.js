@@ -9,7 +9,7 @@ const Mbti = (props) => {
 
   return (
     <React.Fragment>
-      <Grid>여긴 mbti</Grid>
+      <Grid>이걸 살짝 바꿔보면..</Grid>
       <QuestionBox />
       <OXbox>
         <Obtn
