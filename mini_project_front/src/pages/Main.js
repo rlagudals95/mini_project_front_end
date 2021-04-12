@@ -3,6 +3,8 @@ import { Grid, Image, Input, Text } from "../elements";
 
 import { history } from "../redux/configureStore";
 import styled, { keyframes } from "styled-components";
+import MenuBox from "../component/MenuBox";
+
 const Main = (props) => {
   console.log(props);
 
@@ -16,6 +18,7 @@ const Main = (props) => {
       >
         검사하개
       </MbtiBtn>
+      <MenuBox />
     </React.Fragment>
   );
 };

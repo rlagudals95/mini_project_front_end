@@ -7,15 +7,21 @@ import styled from "styled-components";
 import Mbti from "../pages/Mbti";
 import Main from "../pages/Main";
 import Header from "../component/Header";
+import ShowMe from "../pages/ShowMe";
+import BoastDog from "../pages/BoastDog";
+import PostWrite from "../pages/PostWrite";
 
 function App() {
   return (
     <ReactContainer>
-      <Header />
+      {/* <Header /> */}
       <ConnectedRouter history={history}>
         <Switch>
           <Route path="/mbti" exact component={Mbti} />
           <Route path="/" exact component={Main} />
+          <Route path="/showme" exact component={ShowMe} />
+          <Route path="/boastdog" exact component={BoastDog} />
+          <Route path="/postwrite" exact component={PostWrite} />
         </Switch>
       </ConnectedRouter>
     </ReactContainer>
