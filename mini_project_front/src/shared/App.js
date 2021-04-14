@@ -7,7 +7,6 @@ import Main from "../pages/Main";
 import Header from "../component/Header";
 import {createGlobalStyle} from 'styled-components'
 import Result from "../pages/Result";
-import tmp from "../pages/tmp";
 function App() {
   return (
     <>
@@ -16,7 +15,6 @@ function App() {
       <ConnectedRouter history={history}>
         <Switch>
           <Route path="/" exact component={Main} />
-          <Route path="/tmp" exact component={tmp} />
           <Route path="/mbti" exact component={Mbti} />
           <Route path="/result" exact component={Result} />
           <Route path="/result/:mbti" exact component={Result} />

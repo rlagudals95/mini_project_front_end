@@ -15,7 +15,7 @@ const Mbti = (props) => {
 
   useEffect(() => {
     dispatch(mbtiActions.getQuestionsAPI())
-  }, [])
+  }, [dispatch])
 
   const onClickAnswerA = (type, score) => {
     dispatch(mbtiActions.addScore(type, score))

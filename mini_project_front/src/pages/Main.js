@@ -1,8 +1,9 @@
 import React from "react";
 import { history } from "../redux/configureStore";
 import styled, { keyframes } from "styled-components";
+
 const Main = (props) => {
-  console.log(props);
+
 
   return (
     <React.Fragment>

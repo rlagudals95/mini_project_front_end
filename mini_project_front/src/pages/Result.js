@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionCreators as mbtiActions } from "../redux/modules/mbti";
-import { Text, Grid, Button, Image } from "../elements";
+import { Text, Grid } from "../elements";
 
 const Result = (props) => {
     const dispatch = useDispatch()
-    const type = props.match.params.mbti
-    console.log(type)
     const type_data = useSelector(state => state.mbti.type_data)
     const isLoading = useSelector(state => state.mbti.isLoading)
     const result = useSelector(state => state.mbti.result)
-    console.log('RESULT',result)
     useEffect(()=>{
+      if(result[0].score.length === 0){
+        window.alert('검사해주세요!')
+        window.location.href = "/";
+      }
         dispatch(mbtiActions.totalResult(result))
-        // dispatch(mbtiActions.getResultAPI())
-    },[])
-    console.log('RESULT_LIST',type_data)
+    },[dispatch, result])
 
     if(isLoading){
         return(

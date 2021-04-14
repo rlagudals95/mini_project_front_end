@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import HomeIcon from "@material-ui/icons/Home";
-import { history } from "../redux/configureStore";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 
 const Header = () => {
@@ -12,9 +11,7 @@ const Header = () => {
         <InnerBox>
           <Logo
             onClick={() => {
-              history.replace("/");
-              window.location.reload()
-
+              window.location.href = "/";
             }}
           >
             <ProjectLogo />

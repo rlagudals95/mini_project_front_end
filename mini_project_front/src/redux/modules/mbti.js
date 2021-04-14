@@ -1,7 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from 'axios'
-import { history } from "../configureStore";
 
 const SET_QUESTION = 'SET_QUESTION'
 const ADD_SCORE= "ADD_SCORE";
@@ -37,7 +36,6 @@ const initialState = {
   type_data:[]
 };
 
-// const q_API = 'https://run.mocky.io/v3/f00513bb-1875-4636-8e41-d51e165fedfe'
 const q_list_API = 'http://3.34.48.76/api/mbti/start'
 const getQuestionsAPI = () =>{
   return function(dispatch, getState, {history}){
@@ -53,8 +51,8 @@ const getQuestionsAPI = () =>{
 
 const totalResult = (result)=>{
   return function (dispatch, getState, { history }) {
-    // let result = getState().mbti.result
-    console.log('totalResult', result)
+    dispatch(loading(true));
+
     let result_list = [0,0,0,0]
     for(let i = 0; i <result_list.length; i++){
         if(result[i].type === 'M'){
@@ -65,8 +63,12 @@ const totalResult = (result)=>{
             result_list[2]+=Number(result[i].score.reduce((acc,cur) =>acc+cur, 0))}
         else if(result[i].type === 'I'){
             result_list[3]+=Number(result[i].score.reduce((acc,cur) =>acc+cur, 0))}
+            if(result_list===[0,0,0,0]){
+      
+              history.push('/')
+            }
     }
-    console.log('전송?',result_list)
+
     axios({
       method: "POST",
       url: "http://3.34.48.76/api/mbti/result",
@@ -80,7 +82,6 @@ const totalResult = (result)=>{
       }
   }).then((resp)=>{
     dispatch(loading(false));
-    console.log('PostRequest',resp)
     history.push(`/result`)
     dispatch(setResult(resp.data))
   }).catch(error=>{
@@ -121,7 +122,8 @@ const actionCreators = {
   getQuestionsAPI,
   setQuestion,
   addScore,
-  totalResult
+  totalResult,
+  setResult
 };
 
 export { actionCreators };
