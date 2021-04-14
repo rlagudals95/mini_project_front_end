@@ -10,6 +10,7 @@ const Grid = (props) => {
     bg,
     children,
     center,
+    column,
     _onClick,
   } = props;
 
@@ -20,6 +21,7 @@ const Grid = (props) => {
     padding: padding,
     bg: bg,
     center: center,
+    column: column,
   };
   return (
     <React.Fragment>
@@ -37,6 +39,7 @@ Grid.defaultProps = {
   padding: false,
   margin: false,
   bg: false,
+  column: null,
   center: false,
   _onClick: () => {},
 };
@@ -52,6 +55,7 @@ const GridBox = styled.div`
     props.is_flex
       ? `display: flex; align-items: center; justify-content: space-between; `
       : ""}
+  ${(props) => (props.column ? `display: flex; align-items: center; justify-content: space-between; flex-direction: column;` : "")}
       
   ${(props) => (props.center ? `text-align: center` : "")}
 `;
