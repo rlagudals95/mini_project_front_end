@@ -1,61 +1,116 @@
-import React from "react";
-import { Grid, Image, Button, Input } from "../elements";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import ProgressBar from "../component/ProgressBar";
+import { Text, Grid } from "../elements";
 import styled from "styled-components";
-import { history } from "../redux/configureStore";
+import { actionCreators as mbtiActions } from "../redux/modules/mbti";
+import { useDispatch, useSelector } from "react-redux";
+import BeforeResult from "./BeforeResult";
+
 
 const Mbti = (props) => {
-  console.log(props);
+  const dispatch = useDispatch()
+  const qdata = useSelector(state => state.mbti.questions)
+  const isLoading = useSelector(state => state.mbti.isLoading)
+  const [num, setNum] = useState(0);
+
+  useEffect(() => {
+    dispatch(mbtiActions.getQuestionsAPI())
+  }, [dispatch])
+
+  const onClickAnswerA = (type, score) => {
+    dispatch(mbtiActions.addScore(type, score))
+    setNum(num + 1);
+  };
+  const onClickAnswerB = (type, score) => {
+    dispatch(mbtiActions.addScore(type, score))
+    setNum(num + 1);
+  };
+
+
+  if(isLoading){
+    return(
+      <>
+      <h1>LOADING...</h1>
+      </>
+    )
+  }
+
+  if (num > qdata.length-1) {
+    return(
+      <BeforeResult />
+  )
+  }
+  if(qdata.length===0){
+    return(
+        <>
+        No data
+        </>
+    )
+}
+let calc = Math.ceil(((num+1) / qdata.length) * 100);
 
   return (
-    <React.Fragment>
-      <Grid>이걸 살짝 바꿔보면..</Grid>
-      <QuestionBox />
-      <OXbox>
-        <Obtn
-          onClick={() => {
-            history.push("/");
-          }}
-        >
-          ⭕
-        </Obtn>
-        <Xbtn>❌</Xbtn>
-      </OXbox>
-    </React.Fragment>
+    <Grid center column>
+      <ProgressBar
+        bgColors={"#ff7979"}
+        completed={calc}
+        current={num+1}
+        maximum={qdata.length}
+      />
+      <Grid is_flex>
+        <Grid center margin="30px">
+          <QuestionBox>
+            <Text size="36px">Q{num +1}.</Text>
+            <Text size="36px" bold>
+              {qdata[num].qa}
+            </Text>
+          </QuestionBox>
+          <AnswerBox>
+            <AnswerA onClick={()=>onClickAnswerA(qdata[num].mbti, 100)}>
+              <Text size="24px" padding="10px 0">
+                {qdata[num].q1}
+              </Text>
+            </AnswerA>
+            <AnswerB onClick={()=>onClickAnswerB(qdata[num].mbti, 1)}>
+              <Text size="24px" padding="10px 0">
+                {qdata[num].q2}
+              </Text>
+            </AnswerB>
+          </AnswerBox>
+        </Grid>
+      </Grid>{" "}
+    </Grid>
   );
 };
 
-export default Mbti;
-
 const QuestionBox = styled.div`
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  position: absolute;
-  top: 38%;
-  background-color: red;
-  width: 400px;
-  height: 400px;
-  border-radius: 50px;
+  width: 700px;
+  height: 200px;
+  margin: auto;
+  border: 1px solid;
 `;
-
-const OXbox = styled.div`
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  position: absolute;
-  top: 80%;
-  font-size: 200px;
-  display: flex;
-  justify-content: space-between;
-  width: 600px;
+const AnswerBox = styled.div`
+  margin-top: 20px;
+`;
+const AnswerA = styled.div`
+  width: 500px;
+  margin: auto;
   cursor: pointer;
+  border-radius: 15px;
+  background-color: #e2e2e2;
+  &:hover {
+    background-color: #ffe268;
+  }
+`;
+const AnswerB = styled.div`
+  width: 500px;
+  margin: auto;
+  cursor: pointer;
+  border-radius: 15px;
+  background-color: #e2e2e2;
+  &:hover {
+    background-color: #ffe268;
+  }
 `;
 
-const Obtn = styled.div`
-  color: black;
-`;
-
-const Xbtn = styled.div`
-  color: black;
-`;
+export default Mbti;
