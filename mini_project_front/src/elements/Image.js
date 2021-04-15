@@ -56,7 +56,7 @@ const AspectInner = styled.div`
   padding-top: 75%;
   /* overflow: hidden; */
   background-image: url("${(props) => props.src}");
-  max-width:${(props) => props.max_width};
+  max-width: ${(props) => props.max_width};
   background-size: cover;
   /* height: ${(props) => props.height}; */
 `;

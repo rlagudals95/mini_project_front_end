@@ -6,82 +6,90 @@ import { actionCreators as mbtiActions } from "../redux/modules/mbti";
 import { useDispatch, useSelector } from "react-redux";
 import BeforeResult from "./BeforeResult";
 
-
 const Mbti = (props) => {
-  const dispatch = useDispatch()
-  const qdata = useSelector(state => state.mbti.questions)
-  const isLoading = useSelector(state => state.mbti.isLoading)
+  const dispatch = useDispatch();
+  const qdata = useSelector((state) => state.mbti.questions);
+  const isLoading = useSelector((state) => state.mbti.isLoading);
   const [num, setNum] = useState(0);
 
   useEffect(() => {
-    dispatch(mbtiActions.getQuestionsAPI())
-  }, [dispatch])
+    dispatch(mbtiActions.getQuestionsAPI());
+  }, [dispatch]);
 
   const onClickAnswerA = (type, score) => {
-    dispatch(mbtiActions.addScore(type, score))
+    dispatch(mbtiActions.addScore(type, score));
     setNum(num + 1);
   };
   const onClickAnswerB = (type, score) => {
-    dispatch(mbtiActions.addScore(type, score))
+    dispatch(mbtiActions.addScore(type, score));
     setNum(num + 1);
   };
 
-
-  if(isLoading){
-    return(
+  if (isLoading) {
+    return (
       <>
-      <h1>LOADING...</h1>
+        <h1>LOADING...</h1>
       </>
-    )
+    );
   }
 
-  if (num > qdata.length-1) {
-    return(
-      <BeforeResult />
-  )
+  if (num > qdata.length - 1) {
+    return <BeforeResult />;
   }
-  if(qdata.length===0){
-    return(
-        <>
-        No data
-        </>
-    )
-}
-let calc = Math.ceil(((num+1) / qdata.length) * 100);
+  if (qdata.length === 0) {
+    return <>No data</>;
+  }
+  let calc = Math.ceil(((num + 1) / qdata.length) * 100);
 
   return (
-    <Grid center column>
-      <ProgressBar
-        bgColors={"#ff7979"}
-        completed={calc}
-        current={num+1}
-        maximum={qdata.length}
-      />
-      <Grid is_flex>
-        <Grid center margin="30px">
-          <QuestionBox>
-            <Text size="36px">Q{num +1}.</Text>
-            <Text size="36px" bold>
-              {qdata[num].qa}
-            </Text>
-          </QuestionBox>
-          <AnswerBox>
-            <AnswerA onClick={()=>onClickAnswerA(qdata[num].mbti, 100)}>
-              <Text size="24px" padding="10px 0">
-                {qdata[num].q1}
+    <MbtiOutter>
+      <Grid center column>
+        <ProOutter>
+          <ProgressBar
+            bgColors={"#ff7979"}
+            completed={calc}
+            current={num + 1}
+            maximum={qdata.length}
+          />
+        </ProOutter>
+        <Grid is_flex>
+          <Grid center margin="30px">
+            <QuestionBox>
+              <Text size="36px">Q{num + 1}.</Text>
+              <Text size="36px" bold>
+                {qdata[num].qa}
               </Text>
-            </AnswerA>
-            <AnswerB onClick={()=>onClickAnswerB(qdata[num].mbti, 1)}>
-              <Text size="24px" padding="10px 0">
-                {qdata[num].q2}
-              </Text>
-            </AnswerB>
-          </AnswerBox>
-        </Grid>
-      </Grid>{" "}
-    </Grid>
+            </QuestionBox>
+            <AnswerBox>
+              <AnswerA onClick={() => onClickAnswerA(qdata[num].mbti, 100)}>
+                <Text size="24px" padding="10px 0">
+                  {qdata[num].q1}
+                </Text>
+              </AnswerA>
+              <AnswerB onClick={() => onClickAnswerB(qdata[num].mbti, 1)}>
+                <Text size="24px" padding="10px 0">
+                  {qdata[num].q2}
+                </Text>
+              </AnswerB>
+            </AnswerBox>
+          </Grid>
+        </Grid>{" "}
+      </Grid>
+    </MbtiOutter>
   );
 };
+
+const MbtiOutter = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 130px;
+`;
+
+const ProOutter = styled.div`
+  margin: 0px auto;
+  width: 400px;
+`;
 
 const QuestionBox = styled.div`
   width: 700px;
