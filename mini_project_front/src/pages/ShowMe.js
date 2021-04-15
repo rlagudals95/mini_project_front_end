@@ -3,13 +3,17 @@ import { Grid, Image, Input, Text } from "../elements";
 import { history } from "../redux/configureStore";
 import ShowMeDogPost from "../component/ShowMePost";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import showme from "../redux/modules/showme";
 
 const ShowMe = (props) => {
+  const show_list = useSelector((state) => state.showme.list);
+
   return (
     <React.Fragment>
       <BoastDogList>
-        {/* {post_list.map(() => {
-          return   <BoastDogPost />
+        {/* {show_list.map((s, idx) => {
+          return   <ShowMeDogPost key ={s.id}  {...s}/>
         }) } */}
         <ShowMeDogPost />
         <ShowMeDogPost />
@@ -34,7 +38,7 @@ const BoastDogList = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  top: 600px;
+  top: 400px;
   width: 980px;
   /* display: flex; */
   height: 100%;

@@ -1,18 +1,53 @@
 import React from "react";
 import { Grid, Text, Button } from "../elements";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { history } from "../redux/configureStore";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { useState } from "react";
+import ShowmeModal from "../pages/ShowmeModal";
 
-const ShowMeDogPost = () => {
+const ShowMeDogPost = (props) => {
+  console.log(props.post_image_url);
+  const [is_modal, setDetailModal] = useState();
+  const [is_changemodal, setChangeModal] = useState();
+
+  const openDetailModal = () => {
+    setDetailModal(true);
+  };
+
+  const closeDetailModal = () => {
+    setDetailModal(false);
+  };
+
+  const openChangeModal = () => {
+    setChangeModal(true);
+  };
+
+  const closeChangeModal = () => {
+    setChangeModal(false);
+  };
+
   return (
     <React.Fragment>
-      <PostBox></PostBox>
+      <PostBox onClick={openDetailModal}></PostBox>
+      {is_modal ? <ShowmeModal close={closeDetailModal} {...props} /> : null}
     </React.Fragment>
   );
 };
 
 export default ShowMeDogPost;
+
+const hoverBox = keyframes`
+  0% {
+    transform: translateY(10px);
+    opacity: 0.3;
+    
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+`;
 
 const PostBox = styled.div`
   width: 300px;
@@ -22,6 +57,12 @@ const PostBox = styled.div`
   background-size: cover;
   display: flex;
   justify-content: space-between;
+  &:hover {
+    /* background-color: white;
+    color: black; */
+    animation: ${hoverBox} 1s;
+  }
+  cursor: pointer;
 `;
 
 // const LikeBox = styled.div`

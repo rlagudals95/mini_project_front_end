@@ -24,32 +24,21 @@ const Header = () => {
           >
             <InstaLogo />
           </Logo>
+          {/* <DecoBox>user_name님 환영합니다!</DecoBox> */}
           <BtnBox>
             <Btn>
-              <MeetingRoomIcon
-              //   onClick={() => {
-              //     dispatch(userActions.logOutSV(history));
-              //     history.replace("/login");
-              //   }}
-              />
+              <LogBox>
+                <Login
+                  onClick={() => {
+                    history.push("/login");
+                  }}
+                >
+                  로그인
+                </Login>
+
+                <LogOut>로그아웃</LogOut>
+              </LogBox>
             </Btn>
-            <Btn>
-              <HomeIcon
-              //   onClick={() => {
-              //     history.push("/");
-              //   }}
-              />
-            </Btn>
-            <Btn>
-              <FavoriteBorderIcon />
-            </Btn>
-            <ProfileImg
-            // {...styles}
-            // onClick={() => {
-            //   history.push("/profile"); //profile로 가기로 하자
-            //   dispatch(profileActions.getProfileDB(token));
-            // }}
-            />
           </BtnBox>
         </InnerBox>
       </HeaderBox>
@@ -121,6 +110,30 @@ const ProfileImg = styled.div`
   border-radius: 15px;
   margin: 0px 7px;
   cursor: pointer;
+`;
+
+const LogBox = styled.div`
+  width: 130px;
+  height: 75px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 45px;
+`;
+
+const Login = styled.div`
+  width: 70px;
+  height: 50px;
+`;
+
+const LogOut = styled.div`
+  width: 70px;
+  height: 50px;
+`;
+
+const DecoBox = styled.div`
+  width: 350px;
+  height: 80px;
+  background-color: red;
 `;
 
 export default Header;

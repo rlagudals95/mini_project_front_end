@@ -5,6 +5,7 @@ import { history } from "../configureStore";
 import "moment";
 import moment from "moment";
 import { config } from "../../shared/config";
+import { storage } from "../../shared/firebase";
 
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
@@ -12,8 +13,6 @@ const LOADING = "LOADING";
 const DELETE_POST = "DELETE_POST";
 const EDIT_LIKE = "EDIT_LIKE";
 
-console.log(config.api);
-console.log(`${config.api}/article`);
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
@@ -40,7 +39,7 @@ const initialPost = {
 };
 
 const getPostAX = () => {
-  return function (getState, dispatch, { history }) {
+  return function (dispatch, getState, { history }) {
     axios
       .get(`${config.api}/api/article`)
       .then((res) => {
@@ -57,9 +56,9 @@ const getPostAX = () => {
             user_id: _post.userId,
             content: _post.content,
           };
-
           post_list.unshift(post);
         });
+
         dispatch(setPost(post_list));
       })
       .catch((err) => {
@@ -69,11 +68,77 @@ const getPostAX = () => {
   };
 };
 
-const addPostAX = (post) => {
-  return function (getState, dispatch, { history }) {
-    //user 먼저 만들자!
+const addPostAX = (contents) => {
+  return function (dispatch, getState, { history }) {
+    // let formData = new FormData();
+    // formData.append("file", file);
+    // formData.append("contents", contents);
+
+    const _image = getState().image.preview;
+    console.log(contents);
+    console.log("프리뷰는", _image);
+    const option = {
+      url: "http://15.164.211.60/api/article",
+      method: "POST",
+      data: {
+        Article: "null",
+        title: "null",
+        username: "null",
+        content: contents,
+        imgurl: _image,
+      },
+    };
+    axios(option).then((response) => {
+      console.log(response);
+    });
   };
 };
+
+// const addPostAX = (contents) => {
+//   return function (dispatch, getState) {
+//     const _image = getState().image.preview;
+//     //이런식으로 파이어베이스 스토리지를 이용해 전송해주는 방식도 있구나!
+//     const _upload = storage
+//       .ref(`images/${user_info.user_id}_${new Date().getTime()}`)
+//       .putString(_image, "data_url");
+
+//     _upload.then((snapshot) => {
+//       snapshot.ref
+//         .getDownloadURL()
+//         .then((url) => {
+//           axios
+//             .post("http://15.164.211.60/api/article", {
+//               Article: "null",
+//               title: "null",
+//               username: "null",
+//               content: contents,
+//               imgurl: url,
+//             })
+//             .then((response) => {
+//               console.log(response);
+// let post_list = {
+//   id: response.data.id,
+//   post_image_url: url,
+//   ...user_info,
+//   contents: post.contents,
+//   insert_dt: moment().format("YYYY-MM-DD HH:mm:ss"),
+//   like_cnt: 0,
+//   like_id: [],
+// };
+// dispatch(addPost(post_list));
+// dispatch(
+//   imageActions.setPreview("http://via.placeholder.com/400x300")
+// );
+// history.replace("/");
+//             });
+//         })
+//         .catch((error) => {
+//           console.log(error);
+//           window.alert("게시물 저장이 정상적으로 되지 않았습니다.");
+//         });
+//     });
+//   };
+// };
 
 const deletePostAX = (id) => {
   return function (dispatch, getState) {
@@ -107,26 +172,16 @@ const editLikeAX = (post, post_id) => {
 
 export default handleActions(
   {
-    [ADD_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.list.unshift(action.payload.post);
-      }),
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.push(...action.payload.post);
-        draft.list = draft.list.reduce((acc, cur) => {
-          if (acc.findIndex((a) => a.id === cur.id) === -1) {
-            return; // acc는 어레이 맨처음 딕셔너리 그리고 cur을 그뒤의 딕셔너리
-            //여기서 acc는 계속 변한다 어떻게? 뒤의 1,2,3 번째 딕셔너리가 붙은채로
-            //그렇다면 acc 첫번째 딕셔너리 안의 포스트id 중에 뒤에 id가 같은 것이 있다 없다를 검가
-          } else {
-            acc[acc.findIndex((a) => a.id === cur.id)] = cur; //cur 새롭게 추가하는 것
-            //겹치는 포스트 아이디가 있다면?
-
-            return acc;
-          }
-        }, []);
+        // draft.list = action.payload.post_list;
+        draft.list = action.payload.post_list;
       }),
+    [ADD_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list.unshift(...action.payload.post);
+      }),
+
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = draft.list.filter((r, idx) => {
@@ -142,7 +197,7 @@ export default handleActions(
 
 const actionCreators = {
   addPost,
-  setPost,
+  addPostAX,
   getPostAX,
   deletePostAX,
   editLikeAX,
