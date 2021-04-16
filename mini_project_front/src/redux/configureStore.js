@@ -9,7 +9,6 @@ import Post from "./modules/post";
 import Image from "./modules/image";
 import Showme from "./modules/showme";
 import User from "./modules/user";
-
 import MBTI from "./modules/mbti";
 
 export const history = createBrowserHistory();

@@ -13,10 +13,13 @@ const LOADING = "LOADING";
 const DELETE_POST = "DELETE_POST";
 const EDIT_LIKE = "EDIT_LIKE";
 
-const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
+const setPost = createAction(SET_POST, (post_list, paging) => ({
+  post_list,
+  paging,
+})); //여기서 페이징을 안해주니까 안나왔다 ㅜㅜ
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (id) => ({ id }));
-const loading = createAction(LOADING, (loading) => ({ loading }));
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 const editLike = createAction(EDIT_LIKE, (post, post_id) => ({
   post,
   post_id,
@@ -24,7 +27,8 @@ const editLike = createAction(EDIT_LIKE, (post, post_id) => ({
 
 const initialState = {
   list: [],
-  is_loading: false,
+  is_loading: true,
+  paging: { start: null, size: 6 }, //start가 왜 인식이 안돼냐 ㅠㅠ
 };
 
 const initialPost = {
@@ -38,18 +42,33 @@ const initialPost = {
   like_id: [], // like_id는 배열로 만들어서 배열 수만큼 like_cnt 그리고 배열안에 현재 접속유저 유뮤를 파악해 하트 모양결정
 };
 
-const getPostAX = () => {
+const getPostAX = (start = null, size = null) => {
   return function (dispatch, getState, { history }) {
     axios
       .get(`${config.api}/api/article`)
       .then((res) => {
+        console.log(start);
+        let result = res.data.slice(start, size); // 서버에서 받은 데이터를 함수 인자값으로 받은 start와 size 값으로 슬라이스
+        if (result.length === 0) {
+          //불러온 게시물이 끝났다면 return;
+          dispatch(loading(false)); // 로딩 중이면 스피너를 보여주게 설정해줘도 되겠구나
+          return;
+        }
+        console.log(result);
+        let paging = {
+          start: start + result.length + 1,
+          size: size + 5,
+        };
+
+        // console.log(result);
+
+        console.log(res);
         let post_list = [];
 
-        res.data.forEach((_post) => {
+        result.forEach((_post) => {
           console.log(_post);
           let post = {
             id: _post.id,
-            title: _post.title,
             insert_dt: _post.createdAt,
             user_name: _post.username,
             post_image_url: _post.imgUrl,
@@ -59,7 +78,7 @@ const getPostAX = () => {
           post_list.unshift(post);
         });
 
-        dispatch(setPost(post_list));
+        dispatch(setPost(post_list, paging));
       })
       .catch((err) => {
         window.alert("게시물 불러오기 실패");
@@ -73,24 +92,55 @@ const addPostAX = (contents) => {
     // let formData = new FormData();
     // formData.append("file", file);
     // formData.append("contents", contents);
+    // 새로운 시도! URL 넘겨주기!
+
+    let _post = {
+      title: "할수이따!",
+      content: contents,
+      username: "화이팅!",
+    };
 
     const _image = getState().image.preview;
-    console.log(contents);
-    console.log("프리뷰는", _image);
-    const option = {
-      url: "http://15.164.211.60/api/article",
-      method: "POST",
-      data: {
-        Article: "null",
-        title: "null",
-        username: "null",
-        content: contents,
-        imgurl: _image,
-      },
-    };
-    axios(option).then((response) => {
-      console.log(response);
+
+    const _upload = storage
+      .ref(`image/dog_${new Date().getTime()}`)
+      .putString(_image, "data_url");
+
+    _upload.then((snapshot) => {
+      snapshot.ref
+        .getDownloadURL()
+        .then((url) => {
+          console.log(url);
+          axios
+            .post("http://15.164.211.60/api/article", {
+              ..._post,
+              imgUrl: url,
+            })
+            .then((response) => {
+              history.replace("/");
+              console.log(response);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          window.alert("게시물 저장이 정상적으로 되지 않았습니다.");
+        });
     });
+
+    // console.log(contents);
+    // console.log("프리뷰는", _image);
+    // const option = {
+    //   url: "http://15.164.211.60/api/article",
+    //   method: "POST",
+    //   data: {
+    //     username: "null",
+    //     content: contents,
+    //     imgUrl: _image,
+    //   },
+    // };
+    // axios(option).then((response) => {
+    //   console.log(response);
+    // });
   };
 };
 
@@ -175,8 +225,14 @@ export default handleActions(
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
         // draft.list = action.payload.post_list;
-        draft.list = action.payload.post_list;
+        draft.list.push(...action.payload.post_list);
+        draft.paging = action.payload.paging;
       }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
+      }),
+
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.unshift(...action.payload.post);

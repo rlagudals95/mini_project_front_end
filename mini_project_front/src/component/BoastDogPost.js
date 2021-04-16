@@ -54,7 +54,10 @@ const BoastDogPost = (props) => {
     height: 400px;
     background-size: cover;
     background-image: url("${props.post_image_url}");
-    background-position: -150px 0px;
+    background-repeat: no-repeat;
+    background-position: -130px 0px;
+    box-shadow: 1px 3px 3px 1px lightgray;
+    //이미지 수정요망
     &:hover {
       /* background-color: white;
     color: black; */
@@ -76,7 +79,7 @@ const BoastDogPost = (props) => {
         </LikeBox>
       </PostBox>
       {is_modal ? <BoastDogModal close={closeDetailModal} {...props} /> : null}
-    </React.Fragment>
+    </React.Fragment> //여기서 댓글 정보랑 모든걸 넘겨주려나?
   );
 };
 

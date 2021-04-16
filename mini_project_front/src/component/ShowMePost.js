@@ -57,6 +57,7 @@ const PostBox = styled.div`
   background-size: cover;
   display: flex;
   justify-content: space-between;
+  box-shadow: 1px 3px 3px 1px lightgray;
   &:hover {
     /* background-color: white;
     color: black; */

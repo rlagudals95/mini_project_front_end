@@ -19,6 +19,15 @@ const ModalDetail = (props) => {
     setComments(e.target.value);
   };
 
+  // const addComment = () => {
+  //   console.log(comments);
+  //   let comment_info = {
+  //     comment: comments,
+  //     user_name: props.user_
+
+  //   }
+  // }
+
   // 시간 설정
 
   const timeForToday = (value) => {

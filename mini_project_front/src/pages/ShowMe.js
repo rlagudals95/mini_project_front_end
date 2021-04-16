@@ -5,9 +5,36 @@ import ShowMeDogPost from "../component/ShowMePost";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import showme from "../redux/modules/showme";
+import { actionCreators as showmeActions } from "../redux/modules/showme";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Spinner from "./Spinner";
 
 const ShowMe = (props) => {
   const show_list = useSelector((state) => state.showme.list);
+  const paging = useSelector((state) => state.showme.paging);
+  const loading = useSelector((state) => state.showme.is_loading);
+  const dispatch = useDispatch();
+
+  // React.useEffect(() => {
+  //   dispatch(showmeActions.getShowmeAX(paging.start, paging.size));
+  // }, []);
+
+  const next = () => {
+    dispatch(showmeActions.getShowmeAX(paging.start, paging.size));
+  };
+
+  // InfiniteScroll
+  //         dataLength={show_list.length}
+  //         next={next} 
+  //         hasMore={true}
+  //         loader={<h4>Loading...</h4>}
+  //       >
+  //         <BoastDogList>
+  //           {post_list.map((p, idx) => {
+  //             return <BoastDogPost key={p.id} {...p} />;
+  //           })}
+  //         </BoastDogList>
+  //       </InfiniteScroll>
 
   return (
     <React.Fragment>

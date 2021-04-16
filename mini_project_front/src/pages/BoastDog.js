@@ -7,14 +7,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import BoastDogModal from "./BoastDogModal";
 import styled, { keyframes } from "styled-components";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Spinner from "./Spinner";
 
 const BoastDog = (props) => {
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
+  const paging = useSelector((state) => state.post.paging);
+  const loading = useSelector((state) => state.post.is_loading);
+  console.log(paging);
+  console.log(post_list);
 
   React.useEffect(() => {
-    dispatch(postActions.getPostAX());
+    dispatch(postActions.getPostAX(paging.start, paging.size));
   }, []);
+
+  const next = () => {
+    dispatch(postActions.getPostAX(paging.start, paging.size));
+  };
 
   const { history } = props;
 
@@ -22,18 +32,19 @@ const BoastDog = (props) => {
 
   return (
     <React.Fragment>
-      <BoastDogList>
-        {post_list.map((p, idx) => {
-          return <BoastDogPost key={p.id} {...p} />;
-        })}
-        {/* <BoastDogPost />
-        <BoastDogPost />
-        <BoastDogPost />
-        <BoastDogPost />
-        <BoastDogPost />
-        <BoastDogPost />
-        <BoastDogPost /> */}
-      </BoastDogList>
+      <InfiniteScroll
+        dataLength={post_list.length}
+        next={next}
+        hasMore={true}
+        loader={<h4>Loading...</h4>}
+      >
+        <BoastDogList>
+          {post_list.map((p, idx) => {
+            return <BoastDogPost key={p.id} {...p} />;
+          })}
+          {/* 여기서 모든 포스트 정보 준다 */}
+        </BoastDogList>
+      </InfiniteScroll>
       <Button
         is_float
         text="+"
