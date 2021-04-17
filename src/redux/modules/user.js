@@ -27,8 +27,8 @@ const loginCheckAX = (token) => {
   return function (dispatch) {
     if (token) {
       const option = {
-        url: "http://3.34.48.76/api/check",
-        method: "POST",
+        url: "http://13.125.227.134/api/check",
+        method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
@@ -51,19 +51,16 @@ const loginCheckAX = (token) => {
 };
 
 const SignupAX = (email, nickName, password) => {
-  return function (getState, dispatch, { history }) {
+  return function (dispatch, getState, { history }) {
     window.alert("회원가입 연결중");
-    axios({
-      method: "POST",
-      url: "http://3.34.48.76/user/regist",
-
-      data: {
+    axios
+      .post("http://13.125.227.134:8080/user/regist", {
         username: email,
-        nickname: nickName,
         password: password,
-      },
-    })
+        nickname: nickName,
+      })
       .then((user) => {
+        console.log(user);
         dispatch(
           setUser({
             email: email,
@@ -80,18 +77,19 @@ const SignupAX = (email, nickName, password) => {
 };
 
 const LoginAX = (email, password) => {
-  return function (getState, dispatch, { history }) {
+  return function (dispatch, getState, { history }) {
     axios({
       method: "POST",
-      url: "http://3.34.48.76/api/login",
+      url: "http://13.125.227.134:8080/user/login",
       data: {
         username: email,
         password: password,
       },
     })
       .then((res) => {
+        console.log(res);
         //  localStorage.setItem("token", res.data.token); //로컬에다가 토큰저장! res는 서버가 주는값
-        //  setCookie(is_login, res.data.token, 3)//만료일 3
+        setCookie(res.data.token, 3); //만료일 3
         dispatch(setUser(email)); // 이게 맞나~? 닉네임 안받아도 되려나?
         // history.push("/")
       })

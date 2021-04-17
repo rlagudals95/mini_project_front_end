@@ -21,9 +21,13 @@ const BoastDogPost = (props) => {
   const [is_modal, setDetailModal] = useState();
   const [is_changemodal, setChangeModal] = useState();
 
-  const testLike = dispatch(postActions.editLikeAX(props, props.id));
+  const testLike = () => {
+    //이렇게 써야 무한 렌더링 안된다!!
+    dispatch(postActions.editLikeAX(props, props.id));
+  };
+
   const a = () => {
-    window.alert("좋아요 눌러짐! ");
+    window.alert("좋아요 눌러짐!");
   };
   // const comment_list = useSelector((state) => state.comment.list[props.id]);
 

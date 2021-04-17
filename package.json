@@ -14,6 +14,7 @@
     "firebase-tools": "^9.9.0",
     "global": "^4.4.0",
     "history": "^4.10.1",
+    "http-proxy-middleware": "^1.1.2",
     "immer": "^8.0.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",

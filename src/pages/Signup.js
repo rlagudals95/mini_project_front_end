@@ -13,10 +13,10 @@ const Signup = (props) => {
   const [nickName, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordChk, setPwdCheck] = React.useState("");
-  const [userName, setUserName] = React.useState("");
+  // const [userName, setUserName] = React.useState("");
 
   const signup = () => {
-    if (email === "" || password === "" || userName === "") {
+    if (email === "" || password === "") {
       window.alert("아이디, 성함, 패스워드, 닉네임을 모두 입력해주세요!");
       return;
     }
