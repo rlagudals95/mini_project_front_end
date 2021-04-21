@@ -75,25 +75,31 @@ const hoverBox = keyframes`
   }
 `;
 
-const BoastDogList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-  grid-auto-rows: 400px;
-  grid-gap: 40px;
-  margin: 200px auto;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  top: 400px;
-  width: 980px;
-  /* display: flex; */
-  height: 100%;
-  /* display: block; */
+// const BoastDogList = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+//   grid-auto-rows: 400px;
+//   grid-gap: 40px;
+//   margin: 200px auto;
+//   position: absolute;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   text-align: center;
+//   top: 400px;
+//   width: 980px;
+//   /* display: flex; */
+//   height: 100%;
+//   /* display: block; */
 
-  /* justify-content: space-between; */
-  padding: 50px 200px;
+//   /* justify-content: space-between; */
+//   padding: 50px 200px;
+//   flex-wrap: wrap;
+// `;
+const BoastDogList = styled.div`
+  display: flex;
   flex-wrap: wrap;
+  padding-left: 35px;
+  padding-top: 100px;
 `;
 
 const BoastDogTitle = styled.div`

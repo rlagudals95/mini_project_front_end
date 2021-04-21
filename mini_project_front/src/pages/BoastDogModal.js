@@ -143,15 +143,17 @@ const ModalDetail = (props) => {
 const Component = styled.div`
   position: fixed;
   opacity: 0.4;
-  height: 100vh;
-  width: 100vw;
-  background-color: black;
+  height: 9999px;
+  width: 9999px;
+  top:0;
+  left:0;
+  background-color: black; 
   z-index: 10;
 `;
 const ModalComponent = styled.div`
   position: fixed;
-  width: 950px;
-  height: 600px;
+  /* width: 950px; */
+  /* height: 600px; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

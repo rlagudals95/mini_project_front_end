@@ -1,30 +1,18 @@
 import React from "react";
-import { Grid, Text, Button } from "../elements";
 import styled from "styled-components";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import HomeIcon from "@material-ui/icons/Home";
-import InstagramIcon from "@material-ui/icons/Instagram";
-
-import { Route } from "react-router-dom";
-
 import { history } from "../redux/configureStore";
-import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
-
-import { useDispatch, useSelector } from "react-redux";
-
 const Header = () => {
   return (
     <React.Fragment>
       <HeaderBox>
         <InnerBox>
           <Logo
-            onClick={() => {
-              history.push("/");
-            }}
+      onClick={() => {
+        window.location.replace('/')
+      }}
           >
             <InstaLogo />
           </Logo>
-          {/* <DecoBox>user_name님 환영합니다!</DecoBox> */}
           <BtnBox>
             <Btn>
               <LogBox>
@@ -45,14 +33,6 @@ const Header = () => {
     </React.Fragment>
   );
 };
-
-// const HeaderOutter = styled.div`
-//   width: 100%;
-//   min-width: 400px;
-//   height: 75px;
-//   display: flex;
-//   justify-content: space-between;
-// `;
 
 const HeaderBox = styled.div`
   display: flex;

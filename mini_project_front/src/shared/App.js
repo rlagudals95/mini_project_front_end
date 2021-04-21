@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React  from "react";
+import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configureStore";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Mbti from "../pages/Mbti";
 import Main from "../pages/Main";
@@ -11,7 +10,6 @@ import ShowMe from "../pages/ShowMe";
 import BoastDog from "../pages/BoastDog";
 import PostWrite from "../pages/PostWrite";
 import QnA from "../pages/QnA";
-import Css from "./App.css";
 import InfinityScroll from "./InifinityScroll";
 import InfiTest from "./InfiTest";
 import ShowMeDetail from "../pages/ShowMeDetail";

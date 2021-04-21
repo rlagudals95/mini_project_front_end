@@ -52,10 +52,11 @@ const BoastDogPost = (props) => {
   const PostBox = styled.div`
     width: 300px;
     height: 400px;
+    margin: 0 20px 20px 20px;
     background-size: cover;
     background-image: url("${props.post_image_url}");
     background-repeat: no-repeat;
-    background-position: -130px 0px;
+    /* background-position: -130px 0px; */
     box-shadow: 1px 3px 3px 1px lightgray;
     //이미지 수정요망
     &:hover {
@@ -63,6 +64,9 @@ const BoastDogPost = (props) => {
     color: black; */
       animation: ${hoverBox} 1s;
     }
+    &:nth-child(4n) {
+    margin-right: 0;
+  }
     cursor: pointer;
   `;
 
@@ -86,6 +90,10 @@ const BoastDogPost = (props) => {
 BoastDogPost.defaultProps = {
   // id:null
 };
+
+const Blank = styled.div`
+  height:100px;
+`
 
 const LikeBox = styled.div`
   width: 100px;
