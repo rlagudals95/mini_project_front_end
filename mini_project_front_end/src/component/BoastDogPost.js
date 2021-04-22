@@ -40,7 +40,7 @@ const BoastDogPost = (props) => {
   const token = getCookie("token");
   const is_login = useSelector((state) => state.user.is_login);
 
-  console.log("이포스트의 정보", props);
+  // console.log("이포스트의 정보", props);
   // console.log(user_info.username);
   const likeSubmit = () => {
     if (!is_login) {
@@ -63,7 +63,7 @@ const BoastDogPost = (props) => {
       likeId: like_id, // 좋아요를 누른 username들
     };
     let post_id = props.id;
-    // console.log(post);
+    
     dispatch(postActions.editLikeAX(post, post_id, token));
   };
 
@@ -74,7 +74,7 @@ const BoastDogPost = (props) => {
         return [...like_id, l];
       }
     });
-    // console.log(like_id);
+    
 
     let post = {
       username: props.user_name,
@@ -123,12 +123,11 @@ const BoastDogPost = (props) => {
     background-size: cover;
     background-image: url("${props.post_image_url}");
     background-repeat: no-repeat;
-    /* background-position: -130px 0px; */
+   
     box-shadow: 1px 3px 3px 1px lightgray;
     //이미지 수정요망
     &:hover {
-      /* background-color: white;
-    color: black; */
+    
       animation: ${hoverBox} 1s;
     }
     cursor: pointer;

@@ -10,7 +10,7 @@ const InfinityScroll = (query, pageNumber) => {
       url: `${config.api}/api/article`,
       params: { q: query, page: pageNumber },
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
     });
   }, [query, pageNumber]);
 
@@ -18,5 +18,3 @@ const InfinityScroll = (query, pageNumber) => {
 };
 
 export default InfinityScroll;
-
-

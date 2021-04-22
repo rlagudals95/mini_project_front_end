@@ -20,13 +20,9 @@ const BoastDog = (props) => {
 
   const user_info = useSelector((state) => state.user.user);
 
-  console.log(user_info);
+  // console.log(user_info);
 
   React.useEffect(() => {
-    // if (!is_login) {
-    //   history.replace("/login");
-    //   window.alert("로그인 후 이용해주세요 :)");
-    // }
     dispatch(postActions.getPostAX(paging.start, paging.size));
   }, []);
 

@@ -25,11 +25,10 @@ const findDog = (dog, start = null, size = null) => {
   return function (dispatch, getState, { history }) {
     axios
       .post("http://3.34.48.76/api/Adoption/type", {
-        
-        type: dog === '미니어처푸들' ? '푸들' : dog,
+        type: dog === "미니어처푸들" ? "푸들" : dog,
       })
       .then((res) => {
-        console.log('!!!!!!',res)
+        console.log("!!!!!!", res);
         let result = res.data.slice(start, size);
         if (result.length === 0) {
           //불러온 게시물이 끝났다면 return;
@@ -59,12 +58,10 @@ const findDog = (dog, start = null, size = null) => {
           show_list.unshift(show);
         });
         dispatch(setShowme(show_list, paging));
-
-        })
+      })
       .catch((e) => console.error(e));
   };
 };
-
 
 const getShowmeAX = (start = null, size = null) => {
   return function (dispatch, getState, { history }) {
@@ -127,7 +124,6 @@ export default handleActions(
 const actionCreators = {
   getShowmeAX,
   findDog,
-
 };
 
 export { actionCreators };

@@ -53,12 +53,11 @@ const BoastDogList = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   grid-auto-rows: 300px;
   grid-gap: 40px;
-  margin: 200px auto;
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  top: 400px;
+  top: 600px;
   width: 980px;
   /* display: flex; */
   height: 100%;
@@ -68,3 +67,24 @@ const BoastDogList = styled.div`
   padding: 50px 200px;
   flex-wrap: wrap;
 `;
+
+// const BoastDogList = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+//   grid-auto-rows: 300px;
+//   grid-gap: 40px;
+//   margin: 200px auto;
+//   position: absolute;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   text-align: center;
+//   top: 400px;
+//   width: 980px;
+//   /* display: flex; */
+//   height: 100%;
+//   /* display: block; */
+
+//   /* justify-content: space-between; */
+//   padding: 50px 200px;
+//   flex-wrap: wrap;
+// `;

@@ -7,38 +7,37 @@ import { actionCreators as showmeActions } from "../redux/modules/showme";
 import styled from "styled-components";
 
 const ShowMeSearch = (props) => {
-const show_list = useSelector((state) => state.showme.list);
-const paging = useSelector((state) => state.showme.paging);
-const loading = useSelector((state) => state.showme.is_loading);
-const is_login = useSelector((state) => state.user.is_login);
+  const show_list = useSelector((state) => state.showme.list);
+  const paging = useSelector((state) => state.showme.paging);
+  const loading = useSelector((state) => state.showme.is_loading);
+  const is_login = useSelector((state) => state.user.is_login);
 
-
-const dispatch = useDispatch();
-console.log(props.match.params.dog);
-const dog = props.match.params.dog;
-useEffect(() => {
+  const dispatch = useDispatch();
+  console.log(props.match.params.dog);
+  const dog = props.match.params.dog;
+  useEffect(() => {
     dispatch(showmeActions.findDog(dog, paging.start, paging.size));
-}, [dispatch]);
-const next = () => {
+  }, [dispatch]);
+  const next = () => {
     dispatch(showmeActions.findDog(paging.start, paging.size));
-};
-return (
+  };
+  return (
     <>
-        <InfiniteScroll
+      <InfiniteScroll
         dataLength={show_list.length}
         next={next}
         hasMore={true}
         loader={<h4>Loading...</h4>}
-        >
-            <BoastDogList>
-                {show_list.map((s, idx) => {
-                return <ShowMeDogPost key={s.id} {...s} />;
-                })}
-                {loading && <Spinner />}
-            </BoastDogList>
-        </InfiniteScroll>
+      >
+        <BoastDogList>
+          {show_list.map((s, idx) => {
+            return <ShowMeDogPost key={s.id} {...s} />;
+          })}
+          {loading && <Spinner />}
+        </BoastDogList>
+      </InfiniteScroll>
     </>
-);
+  );
 };
 
 const BoastDogList = styled.div`

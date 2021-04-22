@@ -26,7 +26,7 @@ const Header = () => {
         <InnerBox>
           <Logo
             onClick={() => {
-              window.location.replace('/')
+              history.push("/");
             }}
           >
             <InstaLogo />
@@ -137,6 +137,7 @@ const InfoBox = styled.div`
   padding-top: 45px;
   font-weight: 200;
   opacity: 0.6;
+  padding-left: 140px;
 `;
 
 const Login = styled.div`

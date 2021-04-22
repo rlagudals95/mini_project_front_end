@@ -44,11 +44,10 @@ const ModalDetail = (props) => {
 
   return (
     <React.Fragment>
-      <Component onClick={props.close} />
       <ExitContainer>
-        <ExitBtn onClick={props.close}>
+        {/* <ExitBtn onClick={props.close}>
           <CloseIcon fontSize="large" />
-        </ExitBtn>
+        </ExitBtn> */}
       </ExitContainer>
       <ModalComponent>
         <ModalImg src={props.image} />
@@ -86,6 +85,7 @@ const ModalDetail = (props) => {
           </ModalCmtBox>
         </ModalRightContainer>
       </ModalComponent>
+      <Component onClick={props.close} />
     </React.Fragment>
   );
 };
@@ -96,21 +96,21 @@ const Component = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0.4;
-  width: 3000px;
-  height: 2000px;
+  width: 10000px;
+  height: 10000px;
   background-color: black;
   z-index: 1000;
-  display: block;
 `;
 const ModalComponent = styled.div`
   position: relative;
   width: 950px;
   height: 600px;
-  top: 50%;
+  margin: 0px auto;
+  top: 100%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  z-index: 1000;
+  z-index: 2000;
   display: flex;
   @media (max-width: 950px) {
     width: 350px;

@@ -33,8 +33,8 @@ const loginCheckAX = (token) => {
       };
       axios(option)
         .then((res) => {
-          console.log("로그인 체크 넘어옴");
-          console.log(res);
+          // console.log("로그인 체크 넘어옴");
+          // console.log(res);
           dispatch(setUser(res.data));
         })
         .catch((error) => {
@@ -57,7 +57,7 @@ const SignupAX = (email, nickName, password) => {
         nickname: nickName,
       })
       .then((user) => {
-        console.log(user);
+        // console.log(user);
         // dispatch(
         //   setUser({
         //     username: email,
@@ -91,9 +91,10 @@ const LoginAX = (email, password) => {
         dispatch(setUser(res.config.data)); // 이게 맞나~? 닉네임 안받아도 되려나?
         // axios.defaults.headers.common["token"] = `Bearer ${token}`;
         history.push("/");
+        dispatch(getUser(res.data));
       })
       .then(() => {
-        window.location.reload(); // 새로고침 해서 유저 App.js의 useEffect실행 유저정보 가져오기
+        // window.location.reload(); // 새로고침 해서 유저 App.js의 useEffect실행 유저정보 가져오기
       })
       .catch((err) => {
         window.alert("로그인 에러", err);

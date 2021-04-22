@@ -31,7 +31,6 @@ function App() {
   const dispatch = useDispatch();
 
   const user_info = useSelector((state) => state.user.user);
-  console.log(user_info);
 
   React.useEffect(() => {
     if (is_cookie) {

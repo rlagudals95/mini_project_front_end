@@ -4,6 +4,7 @@ import axios from "axios";
 import { history } from "../configureStore";
 import "moment";
 import moment from "moment";
+import { render } from "@testing-library/react";
 
 const SET_COMMENT = "SET_COMMENT";
 const ADD_COMMENT = "ADD_COMMENT";
@@ -28,7 +29,7 @@ const deleteComment = createAction(DELETE_COMMENT, (id, post_id) => ({
   post_id,
 }));
 
-const loading = createAction(LOADING, (comment) => ({ comment }));
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
   list: [],
@@ -40,9 +41,9 @@ const initialState = {
 
 const addCommentAX = (comment, post_id, token) => {
   return function (dispatch, getState, { history }) {
-    console.log(comment); //
-    console.log(post_id); // 이건 포스트 id 그대로 189같은 숫자
-    console.log(token);
+    // console.log(comment); //
+    // console.log(post_id); // 이건 포스트 id 그대로 189같은 숫자
+    // console.log(token);
     // let _comment = {
     //   username: comment.user_name, // 유저네임 받아온것
     //   content: comment.comment, // 댓글 받아온 것
@@ -66,10 +67,14 @@ const addCommentAX = (comment, post_id, token) => {
         //응답이 온다
         console.log("애드코멘트", res);
 
-        let comment_list = { ...comment, id: res.data.id };
-        // console.log(comment_list);
+        //res.data.article.id는 해달 댓글의 아티클 id
+        //res.data.id는 댓글의 id
+        //res.comment 댓글 내용
+        let comment_list = { ...comment, id: res.data.id }; // 코멘트 리스트가 언디파인으로 나온다.,.,!
+        console.log("코멘트 리스트", comment_list);
         dispatch(addComment(comment_list, post_id)); //코멘트 리스트 받아온 값과 포스트 id값을 애드코멘트에 보낸다
-        history.replace("/boastdog");
+        dispatch(getCommentAX(post_id)); //이렇게 하면 바로달린다 댓글이!!!
+        // history.replace("/boastdog");
         // window.location.reload();
       }) // 여기서 받아온 코멘트 리스트와 post_id를  애드 코멘트 리듀서로 돌린다
       .catch((err) => {
@@ -105,7 +110,7 @@ const getCommentAX = (post_id) => {
           };
           comment_list.unshift(comment);
         });
-        console.log(comment_list);
+
         dispatch(setComment(comment_list, post_id));
         console.log(comment_list); // 해당 댓글의 모든 댓글의 정보가 나온다
         // dispatch(setComment(comment_list, post_id));
@@ -138,7 +143,8 @@ const deleteCommentAX = (id, post_id, token) => {
       },
     }).then((res) => {
       window.alert("댓글 삭제 완료!");
-      window.location.reload();
+      dispatch(getCommentAX(post_id));
+      // window.location.reload();
       // console.log("댓글삭제 res", res);
       // dispatch(deleteComment(id, post_id));
     });
@@ -154,11 +160,15 @@ export default handleActions(
       produce(state, (draft) => {
         //  draft.list[action.payload.post_id] 안에 아무것도 없는 상태이면 배열도 없는 상태여서
         // unshift도 되지 않습니다. 그래서 아무것도 없는 경우일 때를 따로 설정했습니다.
+
+        // console.log(action.payload.post_id); // 댓글을 쓴 포스트 id
+        // console.log(action.payload.comment); // 댓글 내용, 쓴사람 닉네임, 댓글 id
         if (!draft.list[action.payload.post_id]) {
           draft.list[action.payload.post_id] = [action.payload.comment];
           return;
         } //댓글이 없다면? 그냥 대체 해주는 거죠??
-        draft.list[action.payload.post_id].unshift(action.payload.comment_list);
+        draft.list[action.payload.post_id].unshift(action.payload.comment);
+        //이니셜 스테이트의 comment_list가 어떤 형식인지 봐야겠다
         // 어떤 포스트의 댓글 배열 안에 새로 받은 코멘트를 넣어줍니다
         //원래 이니셜 스테이트에 1맨 앞에 댓글 추가
       }),
@@ -182,6 +192,11 @@ export default handleActions(
           // 받은 포스트 아이디 순번의 리스트(댓글 배열에서) 받은 id 를 삭제해준다!
         }
       }),
+
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
+      }),
   },
   initialState
 );
@@ -190,6 +205,7 @@ const actionCreators = {
   addCommentAX,
   getCommentAX,
   deleteCommentAX,
+  loading,
 };
 
 export { actionCreators };

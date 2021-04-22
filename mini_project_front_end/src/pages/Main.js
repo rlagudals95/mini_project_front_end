@@ -7,9 +7,20 @@ import MenuBox from "../component/MenuBox";
 import "../index.css";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 //폰트를 테마형태로 덮어씌워서 보여줄 수 있음
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { getCookie } from "../shared/Cookie";
 
 const Main = (props) => {
   console.log(props);
+
+  const token = getCookie("token"); // is_login 이라는 키값을 가진 토큰 가져와라
+  const is_cookie = token ? true : false; // 그리고 is_cookie로 토큰 유무판단
+
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(userActions.loginCheckAX(token));
+  }, []);
 
   const theme = createMuiTheme({
     typography: {

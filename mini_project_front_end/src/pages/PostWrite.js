@@ -73,7 +73,7 @@ const PostWrite = (props) => {
       likeCnt: likeId.length,
       contents: contents,
     };
-    console.log(post_id);
+    // console.log(post_id);
     dispatch(postActions.editPostAX(post_id, post, token));
   };
 

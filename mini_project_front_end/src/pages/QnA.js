@@ -7,12 +7,8 @@ const QnA = () => {
     <Qbox>
       {/* <QnaImg></QnaImg> */}
       <React.Fragment>
-        <MeunBtn
-          onClick={() => {
-            history.push("/chat");
-          }}
-        >
-          챗봇과 상담하기
+        <MeunBtn>
+          <a href="http://3.34.48.76/chat/room">챗봇과 상담하기</a>
         </MeunBtn>
       </React.Fragment>
     </Qbox>
@@ -59,10 +55,13 @@ const MeunBtn = styled.button`
   z-index: 20;
   box-shadow: 1px 3px 3px 1px lightgray;
   cursor: pointer;
-    &:hover {
-    /* background-color: white;
-    color: black; */
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  &:hover {
     animation: ${hoverBox} 1s;
+  }
 `;
 
 export default QnA;

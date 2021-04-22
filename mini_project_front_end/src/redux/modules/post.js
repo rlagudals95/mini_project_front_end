@@ -52,7 +52,7 @@ const getPostAX = (start = null, size = null) => {
     axios
       .get("http://3.34.48.76/api/article")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let result = res.data.slice(start, size); // 서버에서 받은 데이터를 함수 인자값으로 받은 start와 size 값으로 슬라이스
         if (result.length === 0) {
           //불러온 게시물이 끝났다면 return;
@@ -67,7 +67,6 @@ const getPostAX = (start = null, size = null) => {
 
         // console.log(result);
 
-        console.log(res);
         let post_list = [];
 
         result.forEach((_post) => {
@@ -83,7 +82,6 @@ const getPostAX = (start = null, size = null) => {
           };
           post_list.unshift(post);
         });
-
         dispatch(setPost(post_list, paging));
       })
       .catch((err) => {
@@ -152,11 +150,6 @@ const addPostAX = (contents, token) => {
 
 const editLikeAX = (post, post_id, token) => {
   return function (dispatch, getState, { history }) {
-    console.log(post);
-    // axios
-    //   .put(`http://3.34.48.76/api/article/${post_id}`, {
-    //     ...post,
-    //   })
     axios({
       method: "PUT",
       url: `http://3.34.48.76/api/article/${post_id}`,
@@ -169,7 +162,7 @@ const editLikeAX = (post, post_id, token) => {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      console.log(response);
+      // console.log(response);
       let _post = {
         like_id: post.likeId,
         like_cnt: post.likeCnt,
@@ -200,7 +193,7 @@ const editPostAX = (post_id, post, token) => {
     if (_image == _post.post_image_url) {
       //인식안됨
       // 이미지말고 콘텐츠만 수정되었을 때
-      console.log("컨텐츠만 수정됨");
+      // console.log("컨텐츠만 수정됨");
       axios({
         method: "PUT",
         url: `http://3.34.48.76/api/article/${post_id}`,
@@ -214,7 +207,7 @@ const editPostAX = (post_id, post, token) => {
           Authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        console.log(response);
+        // console.log(response);
         // dispatch(editPost(post_id, { ..._edit }));
         history.replace("/boastdog");
         window.location.reload();
@@ -257,8 +250,8 @@ const editPostAX = (post_id, post, token) => {
 
 const deletePostAX = (post_id, token) => {
   return function (dispatch, getState) {
-    console.log("게시물 삭제 포스트id", post_id);
-    console.log("게시물 삭제", token);
+    // console.log("게시물 삭제 포스트id", post_id);
+    // console.log("게시물 삭제", token);
     axios({
       method: "DELETE",
       url: `http://3.34.48.76/api/article/${post_id}`,
@@ -269,7 +262,7 @@ const deletePostAX = (post_id, token) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         window.location.reload();
         // dispatch(deletePost(id));
         // history.replace("/boastdog");

@@ -10,6 +10,7 @@ import ModalForChange from "../component/ModalForChange";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../shared/Cookie";
+import { render } from "@testing-library/react";
 
 const ModalDetail = (props) => {
   const dispatch = useDispatch();
@@ -24,13 +25,16 @@ const ModalDetail = (props) => {
   const comment_list = useSelector((state) => state.comment.list);
   const is_comment = comment_list ? true : false; // 댓글이 없다면 보여줄 필요가 없지 않은가?
   const is_login = useSelector((state) => state.user.is_login);
+  const comment_loading = useSelector((state) => state.comment.is_loading);
 
-  console.log("닉네임", user_info.nickname); //username이 전부 hmk로 들어간다..
+  console.log(comment_loading);
+  // console.log("닉네임", user_info.nickname); //username이 전부 hmk로 들어간다..
 
+  console.log("포스트", props);
   const ok_submit = comments ? true : false;
 
   const selectComment = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setComments(e.target.value);
   };
 
@@ -40,21 +44,22 @@ const ModalDetail = (props) => {
       return;
     }
 
-    console.log("이 포스트의 props는?", props);
+    // console.log("이 포스트의 props는?", props);
     let comment_info = {
       comment: comments,
       nickname: user_info.nickname,
     };
     dispatch(commentActions.addCommentAX(comment_info, props.id, token));
     //  props.id는 포스트 id 같다
+    dispatch(commentActions.loading(true));
     setComments("");
   };
 
   const deleteComment = (id) => {
     // 댓글 id
     // id : 포스트id ,
-    console.log("댓글 id", id);
-    console.log("포스트 id", props.id);
+    // console.log("댓글 id", id);
+    // console.log("포스트 id", props.id);
     dispatch(commentActions.deleteCommentAX(id, props.id, token));
   };
 
@@ -95,6 +100,7 @@ const ModalDetail = (props) => {
     setChangeModal(false);
   };
 
+  console.log("코멘트 리스트", comment_list);
   return (
     <React.Fragment>
       <ModalComponent>
@@ -140,7 +146,12 @@ const ModalDetail = (props) => {
                       <ModalCmtRight>
                         <div>
                           <ModalAuthor>{c.username}</ModalAuthor>
-                          {c.comment}
+                          <CommentBoxOut>
+                            <span>{c.comment}</span>
+                            <CommentBox>
+                              {/* {timeForToday(c.comment_dt)} */}
+                            </CommentBox>
+                          </CommentBoxOut>
                         </div>
                         {c.username === user_info.nickname ? ( //여기서
                           <CmtDeleteBtn
@@ -352,10 +363,23 @@ const ContentsBox = styled.div`
   font-size: 13px;
   font-weight: bolder;
   /* border-bottom: 1px solid #efefef; */
-  width: 328px;
+  width: 315px;
   padding: 10px;
   padding: 16px;
   border-bottom: 1px solid #efefef;
+`;
+
+const CommentBoxOut = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const CommentBox = styled.span`
+  font-size: 5px;
+  color: #999;
+  padding: 4px;
+  margin-left: 40px;
+  opacity: 0.7;
 `;
 
 export default ModalDetail;
