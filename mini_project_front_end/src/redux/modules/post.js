@@ -33,7 +33,7 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
 const initialState = {
   list: [],
   is_loading: true,
-  paging: { start: null, size: 6 }, //start가 왜 인식이 안돼냐 ㅠㅠ
+  paging: { start: null, size: 9 }, //start가 왜 인식이 안돼냐 ㅠㅠ
   // user: { user_id: "hmk" }
 };
 
@@ -134,10 +134,24 @@ const addPostAX = (contents, token) => {
               "Content-Type": "application/json;charset=UTF-8",
               Authorization: `Bearer ${token}`,
             },
-          }).then((response) => {
+          }).then((_post) => {
             history.push("/boastdog");
-            // console.log(response);
-            window.location.reload();
+
+            console.log("애드포스트 반응", _post);
+
+            let post = {
+              id: _post.data.id,
+              insert_dt: _post.data.createdAt,
+              nickname: _post.data.nickname,
+              post_image_url: _post.data.imgUrl,
+              // user_id: _post.data.userId,
+              content: _post.data.content,
+              like_id: _post.data.likeId,
+            };
+
+            // window.location.reload();
+            console.log(post);
+            dispatch(addPost(post));
           });
         })
         .catch((error) => {
@@ -207,10 +221,10 @@ const editPostAX = (post_id, post, token) => {
           Authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        // console.log(response);
-        // dispatch(editPost(post_id, { ..._edit }));
+        console.log("에딧 포스트 정보", response);
+        dispatch(editPost(post_id, ..._edit));
         history.replace("/boastdog");
-        window.location.reload();
+        // window.location.reload();
       });
       return;
     } else {
@@ -288,7 +302,7 @@ export default handleActions(
 
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.unshift(...action.payload.post);
+        draft.list.unshift(action.payload.post);
       }),
 
     [DELETE_POST]: (state, action) =>
@@ -314,7 +328,7 @@ export default handleActions(
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
-        draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+        draft.list[idx] = { ...action.payload.post };
       }),
   },
   initialState

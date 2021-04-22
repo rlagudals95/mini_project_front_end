@@ -34,7 +34,7 @@ const ModalDetail = (props) => {
   const ok_submit = comments ? true : false;
 
   const selectComment = (e) => {
-    // console.log(e.target.value);
+ 
     setComments(e.target.value);
   };
 
@@ -44,7 +44,7 @@ const ModalDetail = (props) => {
       return;
     }
 
-    // console.log("이 포스트의 props는?", props);
+    
     let comment_info = {
       comment: comments,
       nickname: user_info.nickname,
@@ -131,11 +131,6 @@ const ModalDetail = (props) => {
               </ExitContainer>
             </ModalLeftHeader>
 
-            {/* {props.user_id === props.is_me ? (
-              <ModalRightHeader onClick={props.openChangeModal}>
-                <MoreHorizIcon height="14px" width="14px" cursor="pointer" />
-              </ModalRightHeader>
-            ) : null} */}
           </ModalHeader>
           <ContentsBox>{props.content}</ContentsBox>
           <ModalCmtBox>

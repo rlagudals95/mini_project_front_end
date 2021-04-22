@@ -14,7 +14,7 @@ const ModalForChange = (props) => {
   const dispatch = useDispatch();
   const token = getCookie("token"); // is_login 이라는 키값을 가진 토큰 가져와라
 
-  // console.log("이 포스트의 정보는?", props); //props.id === post_id
+  
   return (
     <React.Fragment>
       <ExitContainer>

@@ -18,9 +18,7 @@ const Main = (props) => {
   const is_cookie = token ? true : false; // 그리고 is_cookie로 토큰 유무판단
 
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(userActions.loginCheckAX(token));
-  }, []);
+
 
   const theme = createMuiTheme({
     typography: {

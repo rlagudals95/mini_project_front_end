@@ -94,13 +94,6 @@ const InnerBox = styled.div`
   margin: auto;
 `;
 
-// const InnerBoxLeft = styled.div`
-//   width: 300px;
-//   height: 450px;
-//   margin: auto;
-//   background-image: url("https://firebasestorage.googleapis.com/v0/b/image-community-9d16c.appspot.com/o/images%2F%EC%9D%B8%EC%8A%A4%ED%83%80%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%99%94%EB%A9%B4.jpg?alt=media&token=61d2f880-09be-4e3a-aa42-001dd111e11f");
-//   background-size: cover;
-// `;
 
 const Logo = styled.div`
   margin: 20px auto;

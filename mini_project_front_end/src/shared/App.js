@@ -11,10 +11,9 @@ import ShowMe from "../pages/ShowMe";
 import BoastDog from "../pages/BoastDog";
 import PostWrite from "../pages/PostWrite";
 import QnA from "../pages/QnA";
-import Css from "./App.css";
+
 import InfinityScroll from "./InifinityScroll";
-import InfiTest from "./InfiTest";
-import ShowMeDetail from "../pages/ShowMeDetail";
+
 import Login from "../pages/Login";
 import { createGlobalStyle } from "styled-components";
 import Signup from "../pages/Signup";
@@ -22,7 +21,7 @@ import Result from "../pages/Result";
 import { getCookie } from "./Cookie";
 import user, { actionCreators as userActions } from "../redux/modules/user";
 import ScrollToTop from "./ScrollToTop";
-import NotFound from "../pages/NotFound";
+
 import ShowMeSearch from "../pages/ShowMeSearch";
 
 function App() {
@@ -38,22 +37,6 @@ function App() {
       dispatch(userActions.loginCheckAX(token));
     } //렌더링 마다 로그인체크
   }, []);
-  // React.useEffect(() => {
-  //   if (is_cookie) {
-  //     dispatch(userActions.setUser(user_info));
-  //   } //렌더링 마다 로그인체크 //이렇게 하면 리덕스 데이터가 다 날아가서 위험하다..
-  // });
-
-  // React.useEffect(() => {
-  //   dispatch(userActions.setUser("user_name: hmk1022", "user_id : naver")); //렌더링 마다 로그인체크
-  // });
-
-  //여기서 유저 네임정해준다
-
-  if (token && history.location.pathname === "/login") {
-    //토큰이 있지만 로그인 페이지다?
-    history.push("/");
-  } // 로그인이 되어있지만
 
   return (
     <ReactContainer>
@@ -73,13 +56,11 @@ function App() {
             <Route path="/postwrite/:id" exact component={PostWrite} />
             <Route path="/qna" exact component={QnA} />
             <Route path="/infinity" exact component={InfinityScroll} />
-            <Route path="/infitest" exact component={InfiTest} />
-            <Route path="/showmedetail" exact component={ShowMeDetail} />
+
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/result" exact component={Result} />
             <Route path="/result/:mbti" exact component={Result} />
-            <Route component={NotFound} />
           </Switch>
         </ScrollToTop>
       </ConnectedRouter>

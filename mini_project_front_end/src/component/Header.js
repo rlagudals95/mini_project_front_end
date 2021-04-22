@@ -26,13 +26,13 @@ const Header = () => {
         <InnerBox>
           <Logo
             onClick={() => {
-              history.push("/");
+              window.location.replace("/");
             }}
           >
             <InstaLogo />
           </Logo>
           <InfoBox>
-            {is_login ? `${user.nickname}님 환영합니다!` : null}
+            {/* {is_login ? `${user.nickname}님 환영합니다!` : null} */}
           </InfoBox>
           <BtnBox>
             <Btn>
