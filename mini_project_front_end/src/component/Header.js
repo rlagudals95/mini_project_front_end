@@ -26,7 +26,7 @@ const Header = () => {
         <InnerBox>
           <Logo
             onClick={() => {
-              history.push("/");
+              window.location.replace('/')
             }}
           >
             <InstaLogo />

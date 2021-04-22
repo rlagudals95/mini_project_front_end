@@ -23,6 +23,7 @@ import { getCookie } from "./Cookie";
 import user, { actionCreators as userActions } from "../redux/modules/user";
 import ScrollToTop from "./ScrollToTop";
 import NotFound from "../pages/NotFound";
+import ShowMeSearch from "../pages/ShowMeSearch";
 
 function App() {
   const token = getCookie("token"); // is_login 이라는 키값을 가진 토큰 가져와라
@@ -67,6 +68,7 @@ function App() {
             <Route path="/mbti" exact component={Mbti} />
             <Route path="/" exact component={Main} />
             <Route path="/showme" exact component={ShowMe} />
+            <Route path="/showme/:dog" exact component={ShowMeSearch} />
             <Route path="/boastdog" exact component={BoastDog} />
             <Route path="/postwrite" exact component={PostWrite} />
             <Route path="/postwrite/:id" exact component={PostWrite} />
