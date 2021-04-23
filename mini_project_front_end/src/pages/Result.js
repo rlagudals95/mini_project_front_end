@@ -26,7 +26,7 @@ const Result = (props) => {
     } else {
       return word;
     }
-  };
+  }; //견종의 이름에 빈칸이 있을때 빈 칸을 없애줌
 
   if (isLoading) {
     return (
