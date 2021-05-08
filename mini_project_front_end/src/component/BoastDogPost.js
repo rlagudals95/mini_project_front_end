@@ -63,7 +63,7 @@ const BoastDogPost = (props) => {
       likeId: like_id, // 좋아요를 누른 username들
     };
     let post_id = props.id;
-    
+
     dispatch(postActions.editLikeAX(post, post_id, token));
   };
 
@@ -74,7 +74,6 @@ const BoastDogPost = (props) => {
         return [...like_id, l];
       }
     });
-    
 
     let post = {
       username: props.user_name,
@@ -123,11 +122,10 @@ const BoastDogPost = (props) => {
     background-size: cover;
     background-image: url("${props.post_image_url}");
     background-repeat: no-repeat;
-   
+
     box-shadow: 1px 3px 3px 1px lightgray;
     //이미지 수정요망
     &:hover {
-    
       animation: ${hoverBox} 1s;
     }
     cursor: pointer;

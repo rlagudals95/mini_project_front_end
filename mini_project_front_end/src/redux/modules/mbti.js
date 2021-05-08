@@ -35,21 +35,21 @@ const initialState = {
   type_data: [],
 };
 
-const q_list_API = "http://3.34.48.76/api/mbti/start"; //API로부터 질문들 받아옴
+const q_list_API = "http://3.34.48.76/api/mbti/start";
 const getQuestionsAPI = () => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
     axios
       .get(q_list_API)
       .then((resp) => {
-        dispatch(setQuestion(resp.data)); // state에 삽입
+        dispatch(setQuestion(resp.data));
         dispatch(loading(false));
       })
       .catch((e) => console.error(e));
   };
 };
 
-const totalResult = (result) => { // 테스트 결과 총합
+const totalResult = (result) => {
   return function (dispatch, getState, { history }) {
     dispatch(loading(true));
 
@@ -57,7 +57,7 @@ const totalResult = (result) => { // 테스트 결과 총합
     for (let i = 0; i < result_list.length; i++) {
       if (result[i].type === "M") {
         result_list[0] += Number(
-          result[i].score.reduce((acc, cur) => acc + cur, 0) //각 항목의 점수들 총합하는 로직
+          result[i].score.reduce((acc, cur) => acc + cur, 0)
         );
       } else if (result[i].type === "B") {
         result_list[1] += Number(
@@ -72,7 +72,7 @@ const totalResult = (result) => { // 테스트 결과 총합
           result[i].score.reduce((acc, cur) => acc + cur, 0)
         );
       }
-      if (result_list === [0, 0, 0, 0]) {  //바로 result페이지로 넘어갔을 경우
+      if (result_list === [0, 0, 0, 0]) {
         history.push("/");
       }
     }
@@ -86,7 +86,7 @@ const totalResult = (result) => { // 테스트 결과 총합
         "Access-Control-Allow-Origin": "*",
       },
       data: {
-        result_list: result_list, //API명세서에 약속한대로 result_list:[100,100,100] 형식의 데이터를 서버로 전송
+        result_list: result_list,
       },
     })
       .then((resp) => {

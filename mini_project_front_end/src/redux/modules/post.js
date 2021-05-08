@@ -85,7 +85,7 @@ const getPostAX = (start = null, size = null) => {
         dispatch(setPost(post_list, paging));
       })
       .catch((err) => {
-        window.alert("게시물 불러오기 실패");
+        // window.alert("게시물 불러오기 실패");
         console.log(err);
       });
   };
@@ -222,7 +222,7 @@ const editPostAX = (post_id, post, token) => {
         },
       }).then((response) => {
         console.log("에딧 포스트 정보", response);
-        dispatch(editPost(post_id, ..._edit));
+        dispatch(editPost(post_id, _edit)); //...edit? 해줘야하나
         history.replace("/boastdog");
         // window.location.reload();
       });
@@ -294,6 +294,14 @@ export default handleActions(
         // draft.list = action.payload.post_list;
         draft.list.push(...action.payload.post_list);
         draft.paging = action.payload.paging;
+        draft.list = draft.list.reduce((acc, cur) => {
+          if (acc.findIndex((a) => a.id === cur.id) === -1) {
+            return [...acc, cur];
+          } else {
+            acc[acc.findIndex((a) => a.id === cur.id)] = null;
+            return acc;
+          }
+        }, []);
       }),
     [LOADING]: (state, action) =>
       produce(state, (draft) => {

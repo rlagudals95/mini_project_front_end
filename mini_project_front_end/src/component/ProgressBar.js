@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const ProgressBar = (props) => {
-  const { bgColors, completed, current, maximum } = props; 
+  const { bgColors, completed, current, maximum } = props;
   return (
     <Container>
       <Filler width={completed} bgColors={bgColors} />
-      <Label>{`${current} / ${maximum}`}</Label> 
+      <Label>{`${current} / ${maximum}`}</Label>
     </Container>
   );
 };
@@ -21,11 +21,11 @@ const Container = styled.div`
 
 const Filler = styled.div`
   height: 100%;
-  width: ${(props) => props.width}%; //props로 넘겨받는 수치만큼 width가 채워짐
+  width: ${(props) => props.width}%;
   background: ${(props) => props.bgColors};
   border-radius: inherit;
   text-align: right;
-`; 
+`;
 
 const Label = styled.span`
   padding: 5px;

@@ -61,7 +61,6 @@ const PostWrite = (props) => {
   const editPost = () => {
     const postIdx = post_list.findIndex((p) => p.id == post_id); //495랑 같은 수를 찾아야함..
     const nowPost = post_list[postIdx];
-
     const likeId = nowPost.like_id;
     if (!contents) {
       window.alert("😗빈칸을 채워주세요...ㅎㅎ");

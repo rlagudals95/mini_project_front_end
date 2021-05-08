@@ -32,7 +32,8 @@ const Upload = (props) => {
 
   return (
     <React.Fragment>
-      <input type="file" ref={fileInput} onChange={selectFile} />
+      {/* multiple붙이면 파일여러개 업로드가능! */}
+      <input type="file" ref={fileInput} onChange={selectFile} multiple />
     </React.Fragment>
   );
 };

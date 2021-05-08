@@ -56,7 +56,6 @@ function App() {
             <Route path="/postwrite/:id" exact component={PostWrite} />
             <Route path="/qna" exact component={QnA} />
             <Route path="/infinity" exact component={InfinityScroll} />
-
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/result" exact component={Result} />

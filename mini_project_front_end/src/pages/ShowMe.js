@@ -50,15 +50,14 @@ export default ShowMe;
 
 const BoastDogList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-  grid-auto-rows: 300px;
-  grid-gap: 40px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  top: 600px;
-  width: 980px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-gap: 15px;
+  margin: auto;
+  margin-top: 5vh;
+  width: 900px;
+  padding: 50px 0px;
+  flex-wrap: wrap;
   /* display: flex; */
   height: 100%;
   /* display: block; */

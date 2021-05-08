@@ -12,6 +12,7 @@ const Mbti = (props) => {
   const isLoading = useSelector((state) => state.mbti.isLoading);
   const [num, setNum] = useState(0);
 
+  console.log(qdata); // 질문을 한번에 리덕스로 가져오고 새로고침하면 처음으로 가구나!
   useEffect(() => {
     dispatch(mbtiActions.getQuestionsAPI());
   }, [dispatch]);
@@ -35,7 +36,7 @@ const Mbti = (props) => {
 
   if (num > qdata.length - 1) {
     return <BeforeResult />;
-  } //모든 질문에 대한 선택을 다 하면 결과 준비페이지로
+  }
   if (qdata.length === 0) {
     return <>No data</>;
   }
@@ -61,12 +62,12 @@ const Mbti = (props) => {
               </Text>
             </QuestionBox>
             <AnswerBox>
-              <AnswerA onClick={() => onClickAnswerA(qdata[num].mbti, 100)}> {/*위의 버튼 누르면 100점 추가 */}
+              <AnswerA onClick={() => onClickAnswerA(qdata[num].mbti, 100)}>
                 <Text size="24px" padding="10px 0">
                   {qdata[num].q1}
                 </Text>
               </AnswerA>
-              <AnswerB onClick={() => onClickAnswerB(qdata[num].mbti, 1)}> {/*밑의 버튼 누르면 100점 추가 */}
+              <AnswerB onClick={() => onClickAnswerB(qdata[num].mbti, 1)}>
                 <Text size="24px" padding="10px 0">
                   {qdata[num].q2}
                 </Text>

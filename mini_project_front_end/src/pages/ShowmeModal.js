@@ -91,22 +91,23 @@ const ModalDetail = (props) => {
 };
 
 const Component = styled.div`
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
   opacity: 0.4;
-  width: 10000px;
-  height: 10000px;
+  height: 100%;
+  width: 100%;
   background-color: black;
-  z-index: 1000;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 `;
 const ModalComponent = styled.div`
-  position: relative;
+  position: fixed;
   width: 950px;
   height: 600px;
   margin: 0px auto;
-  top: 100%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
